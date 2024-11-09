@@ -33,6 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // coordinates when snake moves.
     gameArena.innerHTML = "";
 
+    snake.forEach((snakeCell) => {
+      const elem = drawDiv(snakeCell.x, snakeCell.y, "snake");
+      gameArena.appendChild(elem);
+    });
+
     const foodElement = drawDiv(food.x, food.y, "food");
     gameArena.appendChild(foodElement);
   }

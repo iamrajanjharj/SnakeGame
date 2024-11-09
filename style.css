@@ -64,3 +64,11 @@ body {
     opacity: 0.5;
   }
 }
+
+.snake {
+  width: 20px;
+  height: 20px;
+  background-color: #06f576;
+  position: absolute;
+  border-radius: 4px;
+}

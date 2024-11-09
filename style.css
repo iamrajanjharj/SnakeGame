@@ -31,6 +31,7 @@ body {
 
 #score-board {
   font-size: x-large;
+  font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   color: #000000;
   margin: 10px;
@@ -47,4 +48,19 @@ body {
   cursor: pointer;
   border: none;
   border-radius: 6px;
+}
+
+.food {
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  position: absolute;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.5;
+  }
 }

@@ -19,7 +19,7 @@ body {
 }
 
 #game-arena {
-  width: 750px;
+  width: 600px;
   height: 600px;
   background-color: #333333;
   position: relative;
@@ -27,4 +27,24 @@ body {
   border-radius: 7px;
   margin-bottom: 20px;
   box-shadow: 0 0 20px #000000;
+}
+
+#score-board {
+  font-size: x-large;
+  font-weight: bold;
+  color: #000000;
+  margin: 10px;
+}
+
+.start-button {
+  background-color: tomato;
+  color: #ffffff;
+  padding: 15px 30px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 4px 0;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
 }

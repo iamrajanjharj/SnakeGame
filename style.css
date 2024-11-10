@@ -53,16 +53,11 @@ body {
 .food {
   width: 20px;
   height: 20px;
-  background-color: red;
   position: absolute;
-  border-radius: 50%;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0.5;
-  }
+  background-image: url(apple.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .snake {

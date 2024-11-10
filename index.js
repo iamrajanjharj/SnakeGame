@@ -131,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function changeDirection(event) {
+    event.preventDefault();
     const keyPressed = event.keyCode;
     const isGoingUp = dY == -cellSize;
     const isGoingDown = dY == cellSize;

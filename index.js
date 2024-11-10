@@ -3,6 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const arenaSize = 600;
   const cellSize = 20;
 
+  const LEFT_KEY = 37;
+  const UP_KEY = 38;
+  const RIGHT_KEY = 39;
+  const DOWN_KEY = 40;
+
+  let gameSpeed = 300;
+  let intervalId;
+
   let gameStarted = false;
   let food = { x: 300, y: 200 };
   let snake = [
@@ -46,12 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let newX, newY;
 
     do {
-      newX = Math.floor(
-        Math.random() + ((arenaSize - cellSize) / cellSize) * cellSize
-      );
-      newY = Math.floor(
-        Math.random() + ((arenaSize - cellSize) / cellSize) * cellSize
-      );
+      newX =
+        Math.floor((Math.random() * (arenaSize - cellSize)) / cellSize) *
+        cellSize;
+      newY =
+        Math.floor((Math.random() * (arenaSize - cellSize)) / cellSize) *
+        cellSize;
     } while (
       snake.some((snakeCell) => snakeCell.x == newX && snakeCell.y == newY)
     );
@@ -66,6 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // collision of the snake and food happened
       // consume the food and grow the snake(don't pop the tail)
       score += 5;
+
+      if (gameSpeed > 30) {
+        gameSpeed -= 10;
+        clearInterval(intervalId);
+        gameLoop();
+      }
 
       // move the food
       moveFood();
@@ -82,10 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // check for wall collision
-    const isHittingLeftWall = snake[0].x < 0;
-    const isHittingTopWall = snake[0].y < 0;
-    const isHittingRightWall = snake[0].x >= arenaSize;
-    const isHittingBottonWall = snake[0].y >= arenaSize;
+    const isHittingLeftWall = snake[0].x + cellSize < 0;
+    const isHittingTopWall = snake[0].y + cellSize < 0;
+    const isHittingRightWall = snake[0].x + cellSize >= arenaSize;
+    const isHittingBottonWall = snake[0].y + cellSize >= arenaSize;
 
     return (
       isHittingLeftWall ||
@@ -96,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function gameLoop() {
-    setInterval(() => {
+    intervalId = setInterval(() => {
       // check if game started;
 
       if (!gameStarted) return;
@@ -113,12 +127,37 @@ document.addEventListener("DOMContentLoaded", () => {
       updateSnake();
       drawScoreBoard();
       drawFoodAndSnake();
-    }, 1000);
+    }, gameSpeed);
+  }
+
+  function changeDirection(event) {
+    const keyPressed = event.keyCode;
+    const isGoingUp = dY == -cellSize;
+    const isGoingDown = dY == cellSize;
+    const isGoingRight = dX == cellSize;
+    const isGoingLeft = dX == -cellSize;
+
+    if (keyPressed == LEFT_KEY && !isGoingRight) {
+      dX = -cellSize;
+      dY = 0;
+    } else if (keyPressed == RIGHT_KEY && !isGoingLeft) {
+      dX = cellSize;
+      dY = 0;
+    } else if (keyPressed == UP_KEY && !isGoingDown) {
+      dX = 0;
+      dY = -cellSize;
+    } else if (keyPressed == DOWN_KEY && !isGoingUp) {
+      dX = 0;
+      dY = cellSize;
+    }
   }
 
   function runGame() {
-    gameStarted = true;
-    gameLoop();
+    if (!gameStarted) {
+      gameStarted = true;
+      gameLoop();
+      document.addEventListener("keydown", changeDirection);
+    }
   }
 
   function initiateGame() {

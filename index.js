@@ -42,8 +42,41 @@ document.addEventListener("DOMContentLoaded", () => {
     gameArena.appendChild(foodElement);
   }
 
+  function moveFood() {
+    let newX, newY;
+
+    do {
+      newX = Math.floor(
+        Math.random() + ((arenaSize - cellSize) / cellSize) * cellSize
+      );
+      newY = Math.floor(
+        Math.random() + ((arenaSize - cellSize) / cellSize) * cellSize
+      );
+    } while (
+      snake.some((snakeCell) => snakeCell.x == newX && snakeCell.y == newY)
+    );
+
+    food = { x: newX, y: newY };
+  }
+
+  function updateSnake() {
+    const newHead = { x: snake[0].x + dX, y: snake[0].y + dY };
+    snake.unshift(newHead); // add new head coordinates in front of the snake array
+    if (newHead.x == food.x && newHead.y == food.y) {
+      // collision of the snake and food happened
+      // consume the food and grow the snake(don't pop the tail)
+      score += 5;
+
+      // move the food
+      moveFood();
+    } else {
+      snake.pop(); // remove the last tail from the snake array.
+    }
+  }
+
   function gameLoop() {
     setInterval(() => {
+      updateSnake();
       drawScoreBoard();
       drawFoodAndSnake();
     }, 1000);
